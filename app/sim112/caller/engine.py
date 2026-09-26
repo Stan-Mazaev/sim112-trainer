@@ -46,13 +46,6 @@ except ImportError:
     HAS_TRANSFORMERS = False
 
 
-
-
-
-
-
-
-
 _OPENING_TEMPLATES: dict[str, list[str]] = {
     "fire": [
         "Алло! Пожар! Горим! Помогите!",
@@ -115,19 +108,22 @@ _UNCOOPERATIVE_PHRASES = [
 ]
 
 
-
 KEYWORD_TO_FACT: dict[str, str] = {
+    # STT-варианты "что" / "кто" — Whisper tiny путает эти слова
+    "что случил": "what_happened",
+    "кто случил": "what_happened",
+    "то случил": "what_happened",
+    "что произошл": "what_happened",
+    "кто произошл": "what_happened",
+    "то произошл": "what_happened",
+    "что у вас": "what_happened",
+    "кто у вас": "what_happened",
+    "что там": "what_happened",
+    "кто там": "what_happened",
+    "что горит": "what_happened",
+    "что пожар": "what_happened",
 
-    "где находитесь": "address",
-    "где находит": "address",
-    "где вы": "address",
-    "адрес": "address",
-    "улиц": "address",
-    "дом": "address",
-
-    "этаж": "location",
-    "на каком": "location",
-
+    # Пострадавшие
     "сколько людей": "victims",
     "сколько пострадав": "victims",
     "сколько человек": "victims",
@@ -138,24 +134,26 @@ KEYWORD_TO_FACT: dict[str, str] = {
     "есть люди": "victims",
     "есть дет": "victims",
     "есть ранен": "victims",
-    "кто там": "victims",
-    "кто с вами": "victims",
     "сколько вас": "victims",
     "пострадав": "victims",
     "ранен": "victims",
     "жертв": "victims",
-    "люд": "victims",
-    "дет": "victims",
 
+    # Адрес
+    "где находитесь": "address",
+    "где находит": "address",
+    "где вы": "address",
+    "адрес": "address",
+    "улиц": "address",
+    "дом": "address",
+
+    # Детали
+    "этаж": "location",
+    "на каком": "location",
     "подъезд": "entrance",
     "квартир": "apartment",
 
-    "что горит": "what_happened",
-    "что случил": "what_happened",
-    "что произошл": "what_happened",
-    "что пожар": "what_happened",
-    "что там": "what_happened",
-
+    # Ситуативные
     "можете выйти": "exit_status",
     "можете выбр": "exit_status",
     "отрезан": "exit_status",
@@ -163,19 +161,21 @@ KEYWORD_TO_FACT: dict[str, str] = {
 }
 
 
-def _select_fact_key(dispatcher_text: str, revealable: dict) -> str | None:
+def _select_fact_key(
+    dispatcher_text: str,
+    known_facts: dict,
+    already_revealed: set[str],
+) -> tuple[str, bool] | None:
     """
-    По тексту вопроса курсанта выбирает ключ факта для раскрытия.
-
-    Возвращает ключ из revealable, если он соответствует вопросу.
-    Возвращает None, если ни один доступный факт не подходит под вопрос —
-    в этом случае заявитель не должен раскрывать ничего.
+    Возвращает (fact_key, is_repeat):
+    - fact_key — какой факт озвучивать
+    - is_repeat — True, если факт уже был озвучен ранее
+    None — если ни один известный факт не подходит под вопрос.
     """
     lowered = dispatcher_text.lower()
-
     for keyword, fact_key in KEYWORD_TO_FACT.items():
-        if keyword in lowered and fact_key in revealable:
-            return fact_key
+        if keyword in lowered and fact_key in known_facts:
+            return fact_key, fact_key in already_revealed
     return None
 
 
@@ -186,7 +186,6 @@ class FallbackCallerGenerator:
     """
 
     def __init__(self, scenario_id: str):
-
         self.category = self._extract_category(scenario_id)
 
     @staticmethod
@@ -212,14 +211,11 @@ class FallbackCallerGenerator:
         self,
         state: CallerState,
         last_dispatcher_text: str,
-        revealable_facts: dict[str, Any],
+        known_facts: dict[str, Any],
+        already_revealed: set[str],
         action: DispatcherAction,
     ) -> tuple[str, list[str]]:
-        """
-        Возвращает (text, revealed_facts).
-        revealed_facts — ключи, которые заявитель озвучил в этой реплике.
-        """
-
+        """Возвращает (text, revealed_facts)."""
 
         if action == DispatcherAction.UNPROFESSIONAL:
             text = random.choice([
@@ -229,8 +225,6 @@ class FallbackCallerGenerator:
             ])
             return text, []
 
-
-
         if action == DispatcherAction.GROUNDING:
             text = random.choice([
                 "Да... да, я вас слышу... я пытаюсь...",
@@ -239,40 +233,44 @@ class FallbackCallerGenerator:
             ])
             return text, []
 
-
         if action == DispatcherAction.RELEVANT_QUESTION:
-            fact_key = _select_fact_key(last_dispatcher_text, revealable_facts)
+            selected = _select_fact_key(
+                last_dispatcher_text, known_facts, already_revealed,
+            )
 
-            if fact_key is not None:
-                value = revealable_facts[fact_key]
-                if fact_key in ("address", "full_address"):
-                    text = random.choice([
-                        f"Адрес... {value}... скорее!",
-                        f"Да, да, {value}!",
-                        f"{value}, быстрее!",
-                    ])
-                elif fact_key in ("floor", "location", "entrance", "apartment"):
-                    text = random.choice([
-                        f"{value}...",
-                        f"{value}, кажется...",
-                    ])
-                elif fact_key == "victims":
-                    text = random.choice([
-                        f"{value}... со мной!",
-                        f"{value}, скорее!",
-                    ])
-                else:
-                    text = f"{value}..."
-                return text, [fact_key]
+            if selected is None:
+                text = random.choice([
+                    "Я не знаю... я не помню...",
+                    "Не могу сосредоточиться...",
+                    "Пожалуйста, скорее...",
+                ])
+                return text, []
 
+            fact_key, is_repeat = selected
+            value = known_facts[fact_key]
 
-            text = random.choice([
-                "Я не знаю... я не помню...",
-                "Не могу сосредоточиться...",
-                "Пожалуйста, скорее...",
-            ])
-            return text, []
+            if is_repeat:
+                text = random.choice([
+                    f"Я же сказал: {value}!",
+                    f"Ну сколько можно... {value}.",
+                    f"Повторяю: {value}.",
+                ])
+                return text, []  # повторно не помечаем
 
+            if fact_key in ("address", "full_address"):
+                text = random.choice([
+                    f"Адрес... {value}... скорее!",
+                    f"Да, да, {value}!",
+                    f"{value}, быстрее!",
+                ])
+            elif fact_key in ("floor", "location", "entrance", "apartment"):
+                text = random.choice([f"{value}...", f"{value}, кажется..."])
+            elif fact_key == "victims":
+                text = random.choice([f"{value}... со мной!", f"{value}, скорее!"])
+            else:
+                text = f"{value}..."
+
+            return text, [fact_key]
 
         if action == DispatcherAction.INSTRUCTION:
             text = random.choice([
@@ -282,7 +280,6 @@ class FallbackCallerGenerator:
             ])
             return text, []
 
-
         if action == DispatcherAction.REPEATED_QUESTION:
             text = random.choice([
                 "Я же сказал уже!",
@@ -291,7 +288,6 @@ class FallbackCallerGenerator:
             ])
             return text, []
 
-
         if action == DispatcherAction.SILENCE:
             text = random.choice([
                 "Алло?! Вы здесь?!",
@@ -299,7 +295,6 @@ class FallbackCallerGenerator:
                 "Скажите что-нибудь!",
             ])
             return text, []
-
 
         if state.panic >= 70:
             text = random.choice(_HIGH_PANIC_PHRASES)
@@ -311,10 +306,6 @@ class FallbackCallerGenerator:
             text = random.choice(_CALM_PHRASES)
 
         return text, []
-
-
-
-
 
 
 class LLMCallerGenerator:
@@ -423,10 +414,6 @@ class LLMCallerGenerator:
         return raw[:300].strip(), []
 
 
-
-
-
-
 class CallerEngine:
     """
     Фасад над генератором заявителя.
@@ -478,15 +465,17 @@ class CallerEngine:
         if self.fallback is None:
             self.initialize_for_scenario(scenario)
 
-
         action, delta = state_machine.apply_dispatcher_turn(dispatcher_text, duration_sec)
 
-
+        # Для LLM — только факты, которые можно раскрыть сейчас (can_reveal).
         revealable: dict[str, Any] = {}
         for key, value in state_machine.unrevealed_facts().items():
             if state_machine.can_reveal(key):
                 revealable[key] = value
 
+        # Для fallback — все известные факты (включая уже раскрытые, чтобы не терять память).
+        known_facts = dict(state_machine.state.hidden_facts)
+        already_revealed = set(state_machine.state.revealed_facts)
 
         if self.llm is not None and self.llm.model is not None:
             turn = await self.llm.generate(
@@ -497,22 +486,20 @@ class CallerEngine:
                 revealable_facts=revealable,
             )
         else:
-
             clean = sanitize_dispatcher_text(dispatcher_text)
             text, revealed = self.fallback.generate(
                 state=state_machine.state,
                 last_dispatcher_text=clean,
-                revealable_facts=revealable,
+                known_facts=known_facts,
+                already_revealed=already_revealed,
                 action=action,
             )
             turn = CallerTurn(text=text, revealed_facts=revealed, state_delta={})
-
 
         if turn.revealed_facts:
             state_machine.reveal_facts(turn.revealed_facts)
 
         return turn, action, delta
-
 
 
 _engine_instance: CallerEngine | None = None
