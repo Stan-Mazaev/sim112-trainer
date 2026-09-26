@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import base64
 import logging
+import os
 
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
@@ -31,6 +32,10 @@ router = APIRouter()
 
 
 MAX_TURN_BYTES = 16_000 * 2 * 60
+
+# Отладка: сохранять сырое аудио каждого хода в debug_last_input.wav.
+# Включается переменной окружения SIM112_DEBUG_AUDIO=true.
+_DEBUG_AUDIO = os.getenv("SIM112_DEBUG_AUDIO", "false").lower() == "true"
 
 
 @router.websocket("/ws/call/{call_id}")
@@ -88,6 +93,25 @@ async def ws_call(websocket: WebSocket, call_id: str):
                 if not pcm_bytes:
                     await websocket.send_json({"type": "stt_result", "text": ""})
                     continue
+
+                # --- DEBUG: сохранить сырое аудио последнего хода (при SIM112_DEBUG_AUDIO=true) ---
+                if _DEBUG_AUDIO:
+                    try:
+                        import wave
+                        from pathlib import Path
+                        dbg = Path("debug_last_input.wav")
+                        with wave.open(str(dbg), "wb") as wf:
+                            wf.setnchannels(1)
+                            wf.setsampwidth(2)          # Int16
+                            wf.setframerate(16000)
+                            wf.writeframes(pcm_bytes)
+                        logger.info(
+                            "DEBUG: сохранено %s (%d байт, %.2f сек)",
+                            dbg.resolve(), len(pcm_bytes),
+                            len(pcm_bytes) / (16000 * 2),
+                        )
+                    except Exception as exc:
+                        logger.warning("DEBUG-сохранение упало: %s", exc)
 
 
                 try:
