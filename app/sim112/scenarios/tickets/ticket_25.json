@@ -1,0 +1,167 @@
+{
+  "ticket_number": 25,
+  "source": "Билеты-задачи по C 112 . АГС_ГСИ.pdf",
+  "scenarios": [
+    {
+      "id": "ticket_25_case_01",
+      "ticket_number": 25,
+      "case_number": 1,
+      "difficulty": "novice",
+      "situation": "На остановке трамвая нетрезвый мужчина сильно ругается и хватает прохожих за руки, 03 не требуется",
+      "address": "Москва, ул. Фабрициуса, остановка 62 автобуса «ул. Штурвальная»",
+      "address_details": "На стороне ул. Фабрициуса, дом 18",
+      "caller": {
+        "fio": "Соколов Иван Петрович",
+        "phone": "916-896-32-54",
+        "role": "очевидец",
+        "opening_line": "Алло! Тут на остановке пьяный мужчина буянит, ругается, хватает людей!",
+        "initial_panic": 45,
+        "initial_trust": 55,
+        "initial_cooperation": 60,
+        "hidden_facts": {
+          "address": "Москва, ул. Фабрициуса, остановка 62 автобуса «ул. Штурвальная»",
+          "address_details": "На стороне ул. Фабрициуса, дом 18",
+          "what_happened": "Нетрезвый мужчина ругается и хватает прохожих",
+          "victims": "Пострадавших нет, 03 не требуется",
+          "victims_present": false,
+          "threat_to_life": false,
+          "intoxicated": true
+        }
+      },
+      "expected": {
+        "classification_id": "15.22.1.0",
+        "classification_name": "Пьяный в общественном месте",
+        "signs": {
+          "sign_l1": "Пьяный в общественном месте",
+          "sign_l2": null,
+          "sign_l3": null
+        },
+        "services": [
+          "police"
+        ],
+        "services_ekp": [
+          "police"
+        ],
+        "victims_present": false,
+        "threat_to_life": false,
+        "additional_fields": {
+          "what_happened": "Нетрезвый мужчина в общественном месте"
+        }
+      },
+      "hints": [
+        "Уточните адрес и ориентир — остановка у дома 18",
+        "Уточните, есть ли пострадавшие",
+        "Уточните, требуется ли медицинская помощь (в билете нет)",
+        "Оповестить полицию"
+      ]
+    },
+    {
+      "id": "ticket_25_case_02",
+      "ticket_number": 25,
+      "case_number": 2,
+      "difficulty": "novice",
+      "situation": "ДТП без пострадавших и без разлития, пежо и фольксваген",
+      "address": "Москва, МКАД от Варшавского шоссе в сторону Каширского",
+      "address_details": "Напротив ТЦ «Вегас», в левом ряду",
+      "caller": {
+        "fio": "Иванова Елена Сергеевна",
+        "phone": "916-896-32-54",
+        "role": "очевидец",
+        "opening_line": "Алло! ДТП на МКАД, две машины, вроде без пострадавших!",
+        "initial_panic": 50,
+        "initial_trust": 55,
+        "initial_cooperation": 65,
+        "hidden_facts": {
+          "address": "Москва, МКАД от Варшавского шоссе в сторону Каширского",
+          "address_details": "Напротив ТЦ «Вегас», в левом ряду",
+          "what_happened": "ДТП без пострадавших, пежо и фольксваген",
+          "victims": "Пострадавших нет",
+          "victims_present": false,
+          "threat_to_life": false,
+          "cars": "пежо + фольксваген"
+        }
+      },
+      "expected": {
+        "classification_id": "2.1.1.0",
+        "classification_name": "ДТП без пострадавших - легковой",
+        "signs": {
+          "sign_l1": "ДТП",
+          "sign_l2": null,
+          "sign_l3": null
+        },
+        "services": [
+          "police"
+        ],
+        "services_ekp": [
+          "police"
+        ],
+        "victims_present": false,
+        "threat_to_life": false,
+        "additional_fields": {
+          "what_happened": "ДТП без пострадавших"
+        }
+      },
+      "hints": [
+        "Уточните точное место: МКАД от Варшавского в сторону Каширского, напротив ТЦ «Вегас»",
+        "Уточните, есть ли пострадавшие и разлитие топлива",
+        "Оповестить полицию"
+      ]
+    },
+    {
+      "id": "ticket_25_case_03",
+      "ticket_number": 25,
+      "case_number": 3,
+      "difficulty": "extreme",
+      "situation": "Заявитель пришёл в квартиру бывшей супруги, обнаружил труп, лежит на полу, трупные пятна, лужа крови",
+      "address": "МО, г. Домодедово, ул. Текстильщиков, дом 31, кв. 5",
+      "address_details": "Подъезд 1, этаж 1, дом 5В",
+      "caller": {
+        "fio": "Титов Игорь Романович",
+        "phone": "903-128-12-23",
+        "role": "родственник",
+        "opening_line": "(в шоке) Алло... я пришёл к бывшей жене... соседи сказали, что собака воет четыре дня... я открыл... она мёртвая...",
+        "initial_panic": 85,
+        "initial_trust": 40,
+        "initial_cooperation": 50,
+        "hidden_facts": {
+          "address": "МО, г. Домодедово, ул. Текстильщиков, дом 31, кв. 5",
+          "address_details": "Подъезд 1, этаж 1, дом 5В",
+          "what_happened": "Обнаружен труп в квартире",
+          "victims": "Один погибший — бывшая жена",
+          "victims_present": true,
+          "victims_count": 1,
+          "threat_to_life": false,
+          "cause_of_death": "Неизвестна",
+          "scene_details": "Трупные пятна, лужа крови"
+        }
+      },
+      "expected": {
+        "classification_id": "19.1.0.0",
+        "classification_name": "Труп в квартире",
+        "signs": {
+          "sign_l1": "В квартире",
+          "sign_l2": null,
+          "sign_l3": null
+        },
+        "services": [
+          "police"
+        ],
+        "services_ekp": [
+          "police"
+        ],
+        "victims_present": true,
+        "threat_to_life": false,
+        "additional_fields": {
+          "what_happened": "Труп в квартире, причина неизвестна",
+          "victims_count": 1
+        }
+      },
+      "hints": [
+        "Уточните адрес и код подъезда",
+        "Уточните, кто обнаружен и что видно (кровь, трупные пятна)",
+        "Уточните, дверь была заперта, есть ли следы взлома",
+        "Оповестить полицию"
+      ]
+    }
+  ]
+}

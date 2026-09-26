@@ -1,0 +1,159 @@
+{
+  "ticket_number": 20,
+  "source": "Билеты-задачи по C 112 . АГС_ГСИ.pdf",
+  "scenarios": [
+    {
+      "id": "ticket_20_case_01",
+      "ticket_number": 20,
+      "case_number": 1,
+      "difficulty": "normal",
+      "situation": "Дерутся 3 человека, без пострадавших, без оружия",
+      "address": "Москва, Олонецкий проезд, дом 4",
+      "address_details": "За домом, дорожка в сторону кладбища",
+      "caller": {
+        "fio": "Иванов Сергей Петрович",
+        "phone": "916-123-98-78",
+        "role": "очевидец",
+        "opening_line": "Алло! Тут драка! Трое дерутся, но вроде без оружия!",
+        "initial_panic": 60,
+        "initial_trust": 45,
+        "initial_cooperation": 55,
+        "hidden_facts": {
+          "address": "Москва, Олонецкий проезд, дом 4",
+          "address_details": "За домом, дорожка в сторону кладбища",
+          "what_happened": "Драка трёх человек",
+          "victims": "Пострадавших нет",
+          "victims_present": false,
+          "threat_to_life": false,
+          "weapon": "Оружия не видно",
+          "people_count": 3
+        }
+      },
+      "expected": {
+        "classification_id": "15.6.2.1",
+        "classification_name": "Драка на улице",
+        "signs": {
+          "sign_l1": "Драка",
+          "sign_l2": "Улица общественное место",
+          "sign_l3": "До 10 человек"
+        },
+        "services": ["police"],
+        "services_ekp": ["police"],
+        "victims_present": false,
+        "threat_to_life": false,
+        "additional_fields": {
+          "what_happened": "Драка трёх человек",
+          "victims_count": 0
+        }
+      },
+      "hints": [
+        "Уточните количество дерущихся — 3 человека",
+        "Уточните, есть ли оружие (палки, ножи)",
+        "Уточните, есть ли пострадавшие",
+        "Оповестить только полицию"
+      ]
+    },
+    {
+      "id": "ticket_20_case_02",
+      "ticket_number": 20,
+      "case_number": 2,
+      "difficulty": "normal",
+      "situation": "Женщина, речь невнятная, лицо перекошено, на вид 70 лет, просит вызвать скорую",
+      "address": "Дорога от Каширского ш. в сторону д. Истомиха, около автобусной остановки",
+      "address_details": "Домодедовское кладбище рядом с КПП",
+      "caller": {
+        "fio": "Титов Олег Иванович",
+        "phone": "916-896-32-54",
+        "role": "очевидец",
+        "opening_line": "Алло! Тут женщине плохо, лицо перекосило, речь невнятная! Лет семьдесят!",
+        "initial_panic": 70,
+        "initial_trust": 50,
+        "initial_cooperation": 55,
+        "hidden_facts": {
+          "address": "Дорога от Каширского ш. в сторону д. Истомиха",
+          "address_details": "Около автобусной остановки, рядом с Домодедовским кладбищем и КПП",
+          "what_happened": "У женщины инсульт — перекос лица, невнятная речь",
+          "victims": "Одна пострадавшая, женщина ~70 лет",
+          "victims_present": true,
+          "victims_count": 1,
+          "threat_to_life": true,
+          "age": "около 70 лет"
+        }
+      },
+      "expected": {
+        "classification_id": "22.35.0.0",
+        "classification_name": "Парализовало",
+        "signs": {
+          "sign_l1": "Парализовало",
+          "sign_l2": null,
+          "sign_l3": null
+        },
+        "services": ["ambulance"],
+        "services_ekp": ["ambulance"],
+        "victims_present": true,
+        "threat_to_life": true,
+        "additional_fields": {
+          "what_happened": "Перекос лица, невнятная речь — признаки инсульта",
+          "victims_count": 1
+        }
+      },
+      "hints": [
+        "Уточните возраст пострадавшей и её состояние",
+        "Уточните адрес: рядом с Домодедовским кладбищем и КПП",
+        "Оповестить скорую"
+      ]
+    },
+    {
+      "id": "ticket_20_case_03",
+      "ticket_number": 20,
+      "case_number": 3,
+      "difficulty": "extreme",
+      "situation": "Изнасиловали женщину, около 30 лет, травмы, просит вызвать полицию",
+      "address": "Москва, ул. Кастанаевская, дом 42 корп. 2",
+      "address_details": "Во дворе",
+      "caller": {
+        "fio": "Иванова Елена Сергеевна",
+        "phone": "916-896-32-54",
+        "role": "пострадавший",
+        "opening_line": "(плачет, шёпотом) Помогите... меня... изнасиловали... вызовите полицию...",
+        "initial_panic": 95,
+        "initial_trust": 30,
+        "initial_cooperation": 40,
+        "hidden_facts": {
+          "address": "Москва, ул. Кастанаевская, дом 42 корп. 2",
+          "address_details": "Во дворе дома",
+          "what_happened": "Изнасилование",
+          "victims": "Одна пострадавшая, женщина ~30 лет",
+          "victims_present": true,
+          "victims_count": 1,
+          "threat_to_life": true,
+          "age": "около 30 лет",
+          "injuries": "Есть травмы"
+        }
+      },
+      "expected": {
+        "classification_id": "17.1.7.0",
+        "classification_name": "Изнасилование",
+        "signs": {
+          "sign_l1": "Человек в опасности",
+          "sign_l2": "Изнасилование",
+          "sign_l3": null
+        },
+        "services": ["police", "ambulance"],
+        "services_ekp": ["police"],
+        "victims_present": true,
+        "threat_to_life": true,
+        "additional_fields": {
+          "what_happened": "Изнасилование с травмами",
+          "victims_count": 1
+        }
+      },
+      "hints": [
+        "Уточните адрес — заявитель в шоке, может путаться",
+        "Говорите спокойно, заявитель в состоянии острой психотравмы",
+        "Уточните, есть ли физические травмы — нужна ли скорая",
+        "По ЕКП автоматически оповещается полиция, добавьте скорую при наличии травм"
+      ]
+    }
+  ]
+}

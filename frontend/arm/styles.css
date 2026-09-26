@@ -1,0 +1,871 @@
+/* ============================================================================
+   АРМ-112 — тёмная серо-синяя тема (как ведомственное ПО)
+============================================================================ */
+
+:root {
+  --bg-base:      #1e2530;
+  --bg-panel:     #273140;
+  --bg-panel-alt: #2e3a4a;
+  --bg-input:     #1a2029;
+  --bg-hover:     #3a4859;
+
+  --border:       #3b4859;
+  --border-accent:#4a90c9;
+
+  --text-primary: #e8eef5;
+  --text-muted:   #8d9aab;
+  --text-dim:     #64707f;
+
+  --accent:       #4a90c9;
+  --accent-hover: #5aa3dd;
+  --danger:       #c94a4a;
+  --danger-hover: #d95a5a;
+  --success:      #3d9970;
+  --warning:      #d99a3d;
+  --critical:     #d94a4a;
+
+  --radius:       4px;
+  --gap:          8px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+/* ===================== TOPBAR ===================== */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+  padding: 0 16px;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar-left, .topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px; height: 32px;
+  background: var(--accent);
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.system-name {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.topbar-center {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.call-status {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.call-status.active {
+  color: var(--success);
+}
+
+.timer {
+  font-family: "Consolas", monospace;
+  font-size: 18px;
+  color: var(--accent);
+  letter-spacing: 1px;
+}
+
+/* ===================== BUTTONS ===================== */
+
+.btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-family: inherit;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-primary:not(:disabled):hover { background: var(--accent-hover); }
+
+.btn-secondary {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: #fff;
+}
+.btn-danger:not(:disabled):hover { background: var(--danger-hover); }
+
+/* ===================== WORKSPACE ===================== */
+
+.workspace {
+  display: grid;
+  grid-template-columns: 30% 45% 25%;
+  gap: var(--gap);
+  height: calc(100vh - 48px);
+  padding: var(--gap);
+}
+
+.panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.panel-header {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 4px;
+}
+
+/* ===================== PHONE PANEL ===================== */
+
+.phone-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.phone-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.phone-field label {
+  font-size: 10px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+.phone-field span {
+  font-family: "Consolas", monospace;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+#waveform {
+  width: 100%;
+  height: 80px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.dialog-log {
+  flex: 1;
+  min-height: 120px;
+  max-height: 400px;
+  overflow-y: auto;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px;
+  font-size: 12px;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dialog-log .msg {
+  padding: 6px 8px;
+  border-radius: var(--radius);
+  max-width: 90%;
+}
+
+.dialog-log .msg.caller {
+  background: rgba(74, 144, 201, 0.15);
+  border-left: 3px solid var(--accent);
+  align-self: flex-start;
+}
+
+.dialog-log .msg.dispatcher {
+  background: rgba(217, 154, 61, 0.15);
+  border-left: 3px solid var(--warning);
+  align-self: flex-end;
+}
+
+.dialog-log .msg-meta {
+  font-size: 10px;
+  color: var(--text-dim);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.dispatcher-input {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dispatcher-input input {
+  flex: 1;
+}
+
+/* ===================== CARD PANEL ===================== */
+
+fieldset {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+legend {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 0 4px;
+  text-transform: uppercase;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 8px;
+  align-items: center;
+}
+
+.row-wide {
+  grid-template-columns: 110px 1fr;
+}
+
+.row label {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.row-checkboxes {
+  display: flex;
+  gap: 16px;
+  padding-left: 0;
+  grid-template-columns: unset;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+input[type="text"], input[type="number"], select, textarea {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  padding: 5px 8px;
+  font-size: 12px;
+  font-family: inherit;
+  width: 100%;
+  outline: none;
+  transition: border 0.15s;
+}
+
+input[type="text"]:focus, select:focus, textarea:focus {
+  border-color: var(--border-accent);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--text-dim);
+}
+
+textarea { resize: vertical; }
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+.card-actions .btn { flex: 1; }
+
+/* ===================== SERVICES PANEL ===================== */
+
+.services-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+}
+
+.service-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: var(--bg-panel-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-primary);
+  transition: all 0.15s;
+  font-family: inherit;
+  text-align: left;
+}
+
+.service-btn:not(:disabled):hover {
+  background: var(--bg-hover);
+  border-color: var(--border-accent);
+}
+
+.service-btn.activated {
+  background: rgba(61, 153, 112, 0.2);
+  border-color: var(--success);
+  color: var(--success);
+  cursor: default;
+  pointer-events: auto;   /* ← отменяет pointer-events: none, если где-то унаследовалось */
+}
+
+.service-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.service-btn .status-badge {
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+.service-btn.activated .status-badge {
+  color: var(--success);
+}
+
+/* ===================== METRICS ===================== */
+
+.metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.metric {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  padding: 4px 6px;
+  background: var(--bg-panel-alt);
+  border-radius: var(--radius);
+}
+
+.metric-label { color: var(--text-muted); }
+.metric-value { font-weight: 600; color: var(--accent); }
+
+/* ===================== VIOLATIONS ===================== */
+
+.violations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.violation {
+  padding: 6px 8px;
+  border-radius: var(--radius);
+  font-size: 11px;
+  line-height: 1.4;
+  border-left: 3px solid var(--warning);
+  background: rgba(217, 154, 61, 0.1);
+}
+
+.violation.sev-high {
+  border-left-color: var(--danger);
+  background: rgba(217, 74, 74, 0.1);
+}
+
+.violation.sev-critical {
+  border-left-color: var(--critical);
+  background: rgba(217, 74, 74, 0.2);
+  font-weight: 600;
+}
+
+.violation .violation-type {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.empty-state {
+  color: var(--text-dim);
+  font-size: 11px;
+  text-align: center;
+  padding: 8px;
+}
+
+/* ===================== TOPBAR: SELECT СЦЕНАРИЯ ===================== */
+
+.scenario-select {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  padding: 5px 8px;
+  font-size: 12px;
+  font-family: inherit;
+  max-width: 320px;
+  cursor: pointer;
+}
+
+.scenario-select:focus {
+  border-color: var(--border-accent);
+  outline: none;
+}
+
+/* ============================================================================
+   МОДАЛКА ОТЧЁТА
+============================================================================ */
+
+.hidden { display: none !important; }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  width: 640px;
+  max-height: 85vh;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-header h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--text-muted);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 4px;
+}
+
+.modal-close:hover { color: var(--text-primary); }
+
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+}
+
+/* Оценка */
+
+.grade-block {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px;
+  background: var(--bg-panel-alt);
+  border-radius: 8px;
+}
+
+.grade-circle {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 700;
+  border: 4px solid var(--border);
+  flex-shrink: 0;
+}
+
+.grade-circle.grade-excellent { border-color: var(--success); color: var(--success); }
+.grade-circle.grade-good { border-color: var(--accent); color: var(--accent); }
+.grade-circle.grade-fair { border-color: var(--warning); color: var(--warning); }
+.grade-circle.grade-poor { border-color: var(--danger); color: var(--danger); }
+
+.grade-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.grade-label {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.grade-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Секции */
+
+.report-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.report-section-header {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.report-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.report-metric {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: var(--bg-panel-alt);
+  border-radius: var(--radius);
+  font-size: 12px;
+}
+
+.report-metric .label { color: var(--text-muted); }
+.report-metric .value { font-weight: 600; color: var(--accent); }
+
+.report-violations {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.report-violation {
+  padding: 8px 10px;
+  border-radius: var(--radius);
+  border-left: 3px solid var(--warning);
+  background: rgba(217, 154, 61, 0.08);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.report-violation.sev-high {
+  border-left-color: var(--danger);
+  background: rgba(217, 74, 74, 0.08);
+}
+
+.report-violation.sev-critical {
+  border-left-color: var(--danger);
+  background: rgba(217, 74, 74, 0.15);
+  font-weight: 600;
+}
+
+.report-violation .v-type {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 2px;
+  color: var(--text-primary);
+}
+
+.report-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.report-timeline .tl-row {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  gap: 8px;
+  padding: 4px 8px;
+  background: var(--bg-panel-alt);
+  border-radius: var(--radius);
+}
+
+.report-timeline .tl-time {
+  color: var(--text-dim);
+  font-family: "Consolas", monospace;
+}
+
+.report-timeline .tl-text {
+  color: var(--text-primary);
+}
+
+/* ============================================================================
+   ГОЛОСОВОЙ РЕЖИМ
+============================================================================ */
+
+.input-mode {
+  display: flex;
+  gap: 12px;
+  padding: 4px 0 6px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 6px;
+}
+
+.input-mode .radio {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+.input-mode .radio input[type="radio"] {
+  width: auto;
+  margin: 0;
+}
+
+.input-mode .radio input[type="radio"]:checked + span {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.input-text-mode,
+.input-voice-mode {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.input-text-mode {
+  flex-direction: row;
+}
+
+.input-text-mode input {
+  flex: 1;
+}
+
+.input-voice-mode {
+  flex-direction: column;
+  gap: 4px;
+}
+
+.btn-voice {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.15s, transform 0.05s;
+  user-select: none;
+}
+
+.btn-voice:not(:disabled):hover { background: var(--accent-hover); }
+.btn-voice.recording {
+  background: var(--danger);
+  animation: pulse-recording 1.2s infinite;
+}
+.btn-voice:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.voice-icon { font-size: 16px; }
+
+.voice-status {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  min-height: 14px;
+}
+
+@keyframes pulse-recording {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.01); box-shadow: 0 0 8px rgba(217, 74, 74, 0.5); }
+  100% { transform: scale(1); }
+}
+
+/* ===== Поле ФИО курсанта в шапке ===== */
+.cadet-name-input {
+  background: #1a2029;
+  border: 1px solid #3b4859;
+  color: #d8dee9;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+  width: 180px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.cadet-name-input:focus {
+  border-color: #4a90c9;
+}
+.cadet-name-input::placeholder {
+  color: #6b7280;
+}
+
+/* ===== Телефония — кнопки ===== */
+.phone-controls {
+  display: flex;
+  gap: 6px;
+  padding: 6px 10px 4px;
+}
+.phone-btn {
+  flex: 1;
+  background: #1a2029;
+  border: 1px solid #3b4859;
+  color: #a6b0bf;
+  padding: 6px 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.12s ease;
+}
+.phone-btn:hover { border-color: #4a90c9; color: #d8dee9; }
+.phone-btn.active {
+  background: #2a1d1d;
+  border-color: #c0392b;
+  color: #e74c3c;
+}
+
+/* ===== Метрики — прогресс-бары ===== */
+.metric-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+.metric-bar {
+  height: 6px;
+  background: #1a2029;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.metric-bar-fill {
+  height: 100%;
+  width: 0;
+  background: #3b4859;
+  border-radius: 3px;
+  transition: width 0.4s ease, background 0.3s ease;
+}
+.metric-bar-fill.good { background: #2e9e4f; }
+.metric-bar-fill.warn { background: #d9a400; }
+.metric-bar-fill.bad  { background: #c0392b; }
+
+/* ===== Нарушения — бейдж и пульсация ===== */
+.violations-badge {
+  display: inline-block;
+  background: #c0392b;
+  color: #fff;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 1px 7px;
+  border-radius: 10px;
+  margin-left: 6px;
+  min-width: 18px;
+  text-align: center;
+  transition: background 0.2s ease;
+}
+.violations-badge.zero { background: #3b4859; color: #6b7280; }
+.violations-list.pulse {
+  animation: v-pulse 1.6s ease-out;
+}
+@keyframes v-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.7); }
+  50%  { box-shadow: 0 0 0 6px rgba(192, 57, 43, 0.25); }
+  100% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0); }
+}
+
+/* ===== Селектор сценариев — optgroup ===== */
+.scenario-select optgroup {
+  background: #1a2029;
+  color: #4a90c9;
+  font-weight: bold;
+  font-size: 12px;
+}
+.scenario-select option {
+  background: #0f1419;
+  color: #d8dee9;
+  padding: 4px 8px;
+  font-family: monospace;
+}

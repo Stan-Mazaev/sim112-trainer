@@ -1,0 +1,153 @@
+{
+  "ticket_number": 8,
+  "source": "Билеты-задачи по C 112 . АГС_ГСИ.pdf",
+  "scenarios": [
+    {
+      "id": "ticket_08_case_01",
+      "ticket_number": 8,
+      "case_number": 1,
+      "difficulty": "normal",
+      "situation": "Задымление на минус первом этаже в торговом центре, источник не установлен, о пострадавших точной информации нет",
+      "address": "Москва, ул. Кировоградская, дом 15",
+      "address_details": "ТЦ «Электронный рай», станция метро Пражская",
+      "caller": {
+        "fio": "Ивлев Артем Олегович",
+        "phone": "916-123-98-78",
+        "role": "очевидец",
+        "opening_line": "Алло! В торговом центре дым на минус первом этаже! Источник не видно! Люди внизу!",
+        "initial_panic": 65,
+        "initial_trust": 45,
+        "initial_cooperation": 50,
+        "hidden_facts": {
+          "address": "Москва, ул. Кировоградская, дом 15",
+          "address_details": "ТЦ «Электронный рай», у метро Пражская",
+          "what_happened": "Задымление на минус первом этаже ТЦ",
+          "victims": "О пострадавших неизвестно",
+          "victims_present": null,
+          "threat_to_life": true,
+          "floor": "Минус первый этаж"
+        }
+      },
+      "expected": {
+        "classification_id": "1.99.0.154",
+        "classification_name": "Пожар: Торговый центр",
+        "signs": {
+          "sign_l1": "Не отображается оператору 112",
+          "sign_l2": null,
+          "sign_l3": null
+        },
+        "services": ["fire"],
+        "services_ekp": ["fire"],
+        "victims_present": true,
+        "threat_to_life": true,
+        "additional_fields": {
+          "what_happened": "Задымление в ТЦ на -1 этаже"
+        }
+      },
+      "hints": [
+        "Ориентир — метро Пражская и название ТЦ",
+        "Уточните этаж, площадь задымления, есть ли люди внизу",
+        "Оповестить МЧС"
+      ]
+    },
+    {
+      "id": "ticket_08_case_02",
+      "ticket_number": 8,
+      "case_number": 2,
+      "difficulty": "normal",
+      "situation": "Лежит мужчина неизвестный, около 50 лет, без сознания, видимых травм и кровотечений нет",
+      "address": "Дорога от Киевского ш. (М3) в сторону Минского ш. (М1) через Крекшино",
+      "address_details": "Примерно 1,5 км от железнодорожного переезда, напротив пруда",
+      "caller": {
+        "fio": "Соколов Иван Петрович",
+        "phone": "916-896-32-54",
+        "role": "очевидец",
+        "opening_line": "Алло! Тут мужчина лежит на дороге! Без сознания! Лет пятьдесят, крови не видно!",
+        "initial_panic": 60,
+        "initial_trust": 50,
+        "initial_cooperation": 55,
+        "hidden_facts": {
+          "address": "Дорога от Киевского ш. в сторону Минского ш. через Крекшино",
+          "address_details": "Примерно 1,5 км от ж/д переезда, напротив пруда",
+          "what_happened": "Мужчина лежит без сознания",
+          "victims": "Один пострадавший, мужчина около 50 лет",
+          "victims_present": true,
+          "victims_count": 1,
+          "threat_to_life": true,
+          "cause": "Причина неизвестна"
+        }
+      },
+      "expected": {
+        "classification_id": "22.2.0.0",
+        "classification_name": "Без сознания",
+        "signs": {
+          "sign_l1": "Без сознания",
+          "sign_l2": null,
+          "sign_l3": null
+        },
+        "services": ["ambulance"],
+        "services_ekp": ["ambulance"],
+        "victims_present": true,
+        "threat_to_life": true,
+        "additional_fields": {
+          "what_happened": "Человек без сознания на дороге",
+          "victims_count": 1
+        }
+      },
+      "hints": [
+        "Уточните ориентир: Крекшино, 1,5 км от переезда, напротив пруда",
+        "Уточните, дышит ли пострадавший",
+        "Оповестить скорую"
+      ]
+    },
+    {
+      "id": "ticket_08_case_03",
+      "ticket_number": 8,
+      "case_number": 3,
+      "difficulty": "normal",
+      "situation": "Тонет человек в настоящее время, мужчина, кричит о помощи",
+      "address": "Москва, озеро Круглое, на пляже",
+      "address_details": "Рядом дом ул. Таманская, дом 75 корп. 2",
+      "caller": {
+        "fio": "Иванова Елена Сергеевна",
+        "phone": "916-896-32-54",
+        "role": "очевидец",
+        "opening_line": "Алло! Человек тонет! Мужчина кричит, не может выплыть! На пляже!",
+        "initial_panic": 85,
+        "initial_trust": 40,
+        "initial_cooperation": 45,
+        "hidden_facts": {
+          "address": "Москва, озеро Круглое",
+          "address_details": "На пляже, рядом дом ул. Таманская, дом 75 корп. 2",
+          "what_happened": "Человек тонет в озере",
+          "victims": "Мужчина, тонет",
+          "victims_present": true,
+          "victims_count": 1,
+          "threat_to_life": true
+        }
+      },
+      "expected": {
+        "classification_id": "17.7.2.0",
+        "classification_name": "Спасение утопающих",
+        "signs": {
+          "sign_l1": "Человек в воде, на льдине",
+          "sign_l2": "Человек тонет (в настоящее время)",
+          "sign_l3": null
+        },
+        "services": ["fire", "ambulance"],
+        "services_ekp": ["fire"],
+        "victims_present": true,
+        "threat_to_life": true,
+        "additional_fields": {
+          "what_happened": "Человек тонет",
+          "victims_count": 1
+        }
+      },
+      "hints": [
+        "Уточните точное место — озеро Круглое, ориентир Таманская 75к2",
+        "Уточните, сколько людей и как далеко от берега",
+        "По ЕКП оповещается МЧС (спасение на воде), добавьте скорую вручную"
+      ]
+    }
+  ]
+}

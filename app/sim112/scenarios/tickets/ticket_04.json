@@ -1,0 +1,158 @@
+{
+  "ticket_number": 4,
+  "source": "Билеты-задачи по C 112 . АГС_ГСИ.pdf",
+  "scenarios": [
+    {
+      "id": "ticket_04_case_01",
+      "ticket_number": 4,
+      "case_number": 1,
+      "difficulty": "normal",
+      "situation": "Горит балкон и два окна рядом на 13-м этаже, открытое пламя, дом 14-этажный газифицирован",
+      "address": "Москва, ул. Грина, дом 11",
+      "address_details": "В доме находится библиотека № 193",
+      "caller": {
+        "fio": "Сидорова Анна Викторовна",
+        "phone": "916-126-34-71",
+        "role": "очевидец",
+        "opening_line": "Алло! На 13-м этаже балкон горит! Открытый огонь, два окна рядом!",
+        "initial_panic": 60,
+        "initial_trust": 45,
+        "initial_cooperation": 45,
+        "hidden_facts": {
+          "address": "Москва, ул. Грина, дом 11",
+          "address_details": "Библиотека № 193 в этом доме, 14 этажей, дом газифицирован",
+          "what_happened": "Пожар на балконе 13-го этажа, открытое пламя",
+          "victims": "Пострадавших не видно",
+          "victims_present": false,
+          "threat_to_life": true,
+          "floor": "13-й этаж",
+          "building_type": "жилой дом, газифицирован"
+        }
+      },
+      "expected": {
+        "classification_id": "1.5.2.1",
+        "classification_name": "пожар: балкон",
+        "signs": {
+          "sign_l1": "жилой дом",
+          "sign_l2": "балкон",
+          "sign_l3": "открытое пламя"
+        },
+        "services": ["fire"],
+        "services_ekp": ["fire"],
+        "victims_present": false,
+        "threat_to_life": true,
+        "additional_fields": {
+          "what_happened": "Пожар на балконе 13-го этажа",
+          "floor": "13-й этаж"
+        }
+      },
+      "hints": [
+        "Уточните адрес — заявитель может путать номер дома (называет ориентир — библиотека)",
+        "Уточните этаж и этажность дома",
+        "Уточните, газифицирован ли дом",
+        "Оповестить только МЧС"
+      ]
+    },
+    {
+      "id": "ticket_04_case_02",
+      "ticket_number": 4,
+      "case_number": 2,
+      "difficulty": "novice",
+      "situation": "Женщине плохо на автомобильной парковке, потеря сознания, на вид 40 лет",
+      "address": "Московская область, Балашиха, Мирской проезд, д. 16",
+      "address_details": "Со стороны мусорной площадки",
+      "caller": {
+        "fio": "Иванова Ирина Петровна",
+        "phone": "916-897-56-23",
+        "role": "очевидец",
+        "opening_line": "Алло! Тут женщине плохо стало! Она без сознания! На вид лет сорок!",
+        "initial_panic": 70,
+        "initial_trust": 50,
+        "initial_cooperation": 55,
+        "hidden_facts": {
+          "address": "Московская область, Балашиха, Мирской проход, д. 16",
+          "address_details": "Со стороны мусорной площадки, на парковке",
+          "what_happened": "Женщина потеряла сознание",
+          "victims": "Одна пострадавшая, женщина ~40 лет",
+          "victims_present": true,
+          "victims_count": 1,
+          "threat_to_life": true,
+          "cause": "Причина неизвестна"
+        }
+      },
+      "expected": {
+        "classification_id": "22.2.0.0",
+        "classification_name": "Без сознания",
+        "signs": {
+          "sign_l1": "Без сознания",
+          "sign_l2": null,
+          "sign_l3": null
+        },
+        "services": ["ambulance"],
+        "services_ekp": ["ambulance"],
+        "victims_present": true,
+        "threat_to_life": true,
+        "additional_fields": {
+          "what_happened": "Потеря сознания на улице",
+          "victims_count": 1
+        }
+      },
+      "hints": [
+        "Уточните адрес — Балашиха, не Москва",
+        "Уточните возраст, пол, в сознании ли пострадавшая",
+        "Уточните, дышит ли пострадавшая",
+        "Оповестить только скорую"
+      ]
+    },
+    {
+      "id": "ticket_04_case_03",
+      "ticket_number": 4,
+      "case_number": 3,
+      "difficulty": "normal",
+      "situation": "Нужно открыть дверь в квартиру. В квартире проживает пожилой одинокий инвалид, не открывает 3-й день",
+      "address": "Зеленоград, 9 микрорайон, корп. 902, кв. 45",
+      "address_details": "Подъезд 1, этаж 3, код 45В",
+      "caller": {
+        "fio": "Иванова Елена Сергеевна",
+        "phone": "916-896-32-54",
+        "role": "сосед",
+        "opening_line": "Алло! Тут сосед-инвалид третий день дверь не открывает! Одинокий, пожилой! Волнуюсь!",
+        "initial_panic": 55,
+        "initial_trust": 50,
+        "initial_cooperation": 60,
+        "hidden_facts": {
+          "address": "Зеленоград, 9 микрорайон, корп. 902, кв. 45",
+          "address_details": "Подъезд 1, этаж 3, код 45В",
+          "what_happened": "Сосед-инвалид не открывает дверь 3 дня",
+          "victims": "Один человек в квартире, пожилой инвалид",
+          "victims_present": true,
+          "victims_count": 1,
+          "threat_to_life": true,
+          "situation_type": "Нужно вскрытие двери"
+        }
+      },
+      "expected": {
+        "classification_id": "17.8.11.2",
+        "classification_name": "Открыть дверь (инвалид или одинокий пожилой человек)",
+        "signs": {
+          "sign_l1": "Открыть дверь, поднять с пола, перенести в скорую",
+          "sign_l2": "Одинокий инвалид пожилой человек или болен, ограничен в движении",
+          "sign_l3": "Открыть дверь в квартиру"
+        },
+        "services": ["fire", "ambulance"],
+        "services_ekp": ["fire"],
+        "victims_present": true,
+        "threat_to_life": true,
+        "additional_fields": {
+          "what_happened": "Требуется вскрытие двери — сосед-инвалид не отвечает 3 дня"
+        }
+      },
+      "hints": [
+        "По ЕКП тип автоматически оповещает только МЧС (вскрытие двери)",
+        "Но человек может быть без сознания — добавьте скорую вручную",
+        "Уточните ФИО, возраст и состояние соседа, насколько это известно",
+        "Уточните код подъезда и этаж"
+      ]
+    }
+  ]
+}

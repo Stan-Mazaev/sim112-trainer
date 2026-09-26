@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>АРМ-112 — Тренажёр</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ======================= ВЕРХНЯЯ ПАНЕЛЬ ======================= -->
+<header class="topbar">
+  <div class="topbar-left">
+    <span class="logo">112</span>
+    <span class="system-name">АРМ оператора Службы 112</span>
+  </div>
+  <div class="topbar-center">
+    <div class="call-status" id="call-status">Ожидание вызова</div>
+    <div class="timer" id="timer">00:00</div>
+  </div>
+  <div class="topbar-right">
+    <input id="cadet-name"
+           type="text"
+           class="cadet-name-input"
+           placeholder="ФИО курсанта"
+           maxlength="120"
+           autocomplete="off">
+    <select id="scenario-select" class="scenario-select">
+      <option value="">— выберите сценарий —</option>
+    </select>
+    <button id="btn-accept" class="btn btn-primary" disabled>Принять вызов</button>
+    <button id="btn-end" class="btn btn-danger" disabled>Завершить</button>
+  </div>
+</header>
+
+<!-- ======================= ОСНОВНОЙ ЭКРАН ======================= -->
+<main class="workspace">
+
+  <!-- ------- ЛЕВАЯ КОЛОНКА: ТЕЛЕФОНИЯ + ДИАЛОГ ------- -->
+  <section class="panel panel-phone">
+    <div class="panel-header">Телефония</div>
+
+    <div class="phone-info">
+      <div class="phone-field">
+        <label>АОН</label>
+        <span id="phone-caller">—</span>
+      </div>
+      <div class="phone-field">
+        <label>Таймер</label>
+        <span id="phone-timer">00:00</span>
+      </div>
+    </div>
+
+    <div class="phone-controls">
+      <button class="phone-btn" id="btn-mute"    title="Отключить микрофон">🎙 Mute</button>
+      <button class="phone-btn" id="btn-hold"    title="Удержание">⏸ Hold</button>
+      <button class="phone-btn" id="btn-transfer" title="Перевод">↪ Transfer</button>
+    </div>
+
+    <canvas id="waveform" width="320" height="80"></canvas>
+
+    <div class="dialog-log" id="dialog-log"></div>
+
+    <div class="dispatcher-input">
+      <div class="input-mode">
+        <label class="radio">
+          <input type="radio" name="input-mode" value="text" checked>
+          <span>Текст</span>
+        </label>
+        <label class="radio">
+          <input type="radio" name="input-mode" value="voice">
+          <span>Голос</span>
+        </label>
+      </div>
+
+      <div class="input-text-mode">
+        <input id="dispatcher-text" type="text" placeholder="Реплика диспетчера..." disabled>
+        <button id="btn-send" class="btn btn-secondary" disabled>Отправить</button>
+      </div>
+
+      <div class="input-voice-mode hidden">
+        <button id="btn-voice" class="btn btn-voice" disabled>
+          <span class="voice-icon">🎤</span>
+          <span class="voice-label">Удерживайте для записи</span>
+        </button>
+        <div class="voice-status" id="voice-status"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ------- ЦЕНТРАЛЬНАЯ КОЛОНКА: КАРТОЧКА ВЫЗОВА ------- -->
+  <section class="panel panel-card">
+    <div class="panel-header">Карточка вызова</div>
+
+    <!-- Заявитель -->
+    <fieldset>
+      <legend>Заявитель</legend>
+      <div class="row">
+        <label>ФИО</label>
+        <input id="card-caller-fio" type="text" placeholder="Фамилия И.О.">
+      </div>
+      <div class="row">
+        <label>Статус</label>
+        <select id="card-caller-role">
+          <option value="">— не указан —</option>
+          <option value="очевидец">очевидец</option>
+          <option value="участник">участник</option>
+          <option value="родственник">родственник</option>
+          <option value="сосед">сосед</option>
+          <option value="пострадавший">пострадавший</option>
+        </select>
+      </div>
+      <div class="row">
+        <label>Телефон</label>
+        <input id="card-caller-phone" type="text" placeholder="+7 ...">
+      </div>
+    </fieldset>
+
+    <!-- Происшествие -->
+    <fieldset>
+      <legend>Происшествие</legend>
+      <div class="row">
+        <label>Адрес</label>
+        <input id="card-address" type="text" placeholder="Формализованный адрес">
+      </div>
+      <div class="row row-wide">
+        <label>Что случилось</label>
+        <textarea id="card-what-happened" rows="2" placeholder="Со слов заявителя"></textarea>
+      </div>
+      <div class="row row-checkboxes">
+        <label class="checkbox"><input type="checkbox" id="card-victims"> Пострадавшие</label>
+        <label class="checkbox"><input type="checkbox" id="card-threat"> Угроза жизни</label>
+      </div>
+    </fieldset>
+
+    <!-- Классификация ЕКП -->
+    <fieldset>
+      <legend>Классификация по ЕКП</legend>
+      <div class="row">
+        <label>Признак 1</label>
+        <input id="card-sign-l1" type="text" placeholder="Улица / Транспорт / ...">
+      </div>
+      <div class="row">
+        <label>Признак 2</label>
+        <input id="card-sign-l2" type="text" placeholder="—">
+      </div>
+      <div class="row">
+        <label>Признак 3</label>
+        <input id="card-sign-l3" type="text" placeholder="—">
+      </div>
+      <div class="row">
+        <label>ID типа</label>
+        <input id="card-classification-id" type="text" placeholder="напр. 1.1.1.1">
+      </div>
+      <div class="row">
+        <label>Итоговый тип</label>
+        <input id="card-classification-name" type="text" placeholder="напр. пожар: мусор">
+      </div>
+    </fieldset>
+
+    <div class="card-actions">
+      <button id="btn-save-card" class="btn btn-primary" disabled>Сохранить карточку</button>
+      <button id="btn-close-card" class="btn btn-danger" disabled>Карточка отработана</button>
+    </div>
+  </section>
+
+  <!-- ------- ПРАВАЯ КОЛОНКА: СЛУЖБЫ И МЕТРИКИ ------- -->
+  <section class="panel panel-services">
+    <div class="panel-header">Список оповещения</div>
+
+    <div class="services-list" id="services-list">
+      <!-- Кнопки служб будут вставлены из JS -->
+    </div>
+
+    <div class="panel-header">Метрики</div>
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-head">
+          <span class="metric-label">Соблюдение протокола</span>
+          <span class="metric-value" id="metric-protocol">0%</span>
+        </div>
+        <div class="metric-bar"><div class="metric-bar-fill" id="metric-protocol-bar"></div></div>
+      </div>
+      <div class="metric">
+        <div class="metric-head">
+          <span class="metric-label">Индекс паники</span>
+          <span class="metric-value" id="metric-panic">—</span>
+        </div>
+        <div class="metric-bar"><div class="metric-bar-fill" id="metric-panic-bar"></div></div>
+      </div>
+      <div class="metric">
+        <div class="metric-head">
+          <span class="metric-label">Комплаенс</span>
+          <span class="metric-value" id="metric-compliance">—</span>
+        </div>
+        <div class="metric-bar"><div class="metric-bar-fill" id="metric-compliance-bar"></div></div>
+      </div>
+    </div>
+
+    <div class="panel-header">
+      Нарушения <span class="violations-badge" id="violations-badge">0</span>
+    </div>
+    <div class="violations-list" id="violations-list">
+      <div class="empty-state">Нарушений нет</div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ======================= МОДАЛКА ОТЧЁТА ======================= -->
+<div id="report-modal" class="modal-overlay hidden">
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <h2>Отчёт по звонку</h2>
+      <button class="modal-close" id="btn-close-modal-x" aria-label="Закрыть">×</button>
+    </div>
+
+    <div class="modal-body">
+
+      <!-- Оценка -->
+      <div class="grade-block">
+        <div class="grade-circle" id="report-grade-circle">
+          <span id="report-grade-value">—</span>
+        </div>
+        <div class="grade-text">
+          <div class="grade-label" id="report-grade-label">—</div>
+          <div class="grade-sub" id="report-grade-sub">—</div>
+        </div>
+      </div>
+
+      <!-- Метрики -->
+      <div class="report-section">
+        <div class="report-section-header">Метрики</div>
+        <div class="report-metrics" id="report-metrics"></div>
+      </div>
+
+      <!-- Нарушения -->
+      <div class="report-section">
+        <div class="report-section-header">Нарушения</div>
+        <div class="report-violations" id="report-violations">
+          <div class="empty">Нарушений нет</div>
+        </div>
+      </div>
+
+      <!-- Таймлайн (сжатый) -->
+      <div class="report-section">
+        <div class="report-section-header">Ключевые моменты</div>
+        <div class="report-timeline" id="report-timeline">
+          <div class="empty">—</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="btn-download-json">Скачать JSON</button>
+      <button class="btn btn-primary" id="btn-download-pdf">Скачать PDF</button>
+      <button class="btn btn-secondary" id="btn-close-modal">Закрыть</button>
+    </div>
+
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

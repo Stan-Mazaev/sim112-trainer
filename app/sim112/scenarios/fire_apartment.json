@@ -1,0 +1,24 @@
+{
+  "id": "fire_apartment",
+  "title": "Пожар в квартире с детьми",
+  "description": "Заявитель в горящей квартире, сильное задымление, двое детей. Плохая слышимость, острая паника.",
+  "difficulty": "normal",
+  "initial_prompt": "ignored",
+  "opening_line": "Алло! Пожар! Горим! Помогите!",
+  "airtime_target": [35, 50],
+  "required_fields": ["address", "what_happened", "victims_present", "victims_count", "floor"],
+  "critical_fields": ["address", "threat_to_life"],
+  "initial_caller_state": {
+    "panic": 85,
+    "trust": 35,
+    "compliance": 20,
+    "cooperation": 15,
+    "phase": "shock",
+    "call_duration_sec": 0
+  },
+  "hidden_facts_template": {
+    "address": "ул. Ленина 15, корпус 2, квартира 42",
+    "floor": "5-й этаж",
+    "victims": "двое детей, 4 и 7 лет"
+  }
+}

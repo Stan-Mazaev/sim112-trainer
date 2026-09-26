@@ -1,0 +1,158 @@
+{
+  "ticket_number": 13,
+  "source": "Билеты-задачи по C 112 . АГС_ГСИ.pdf",
+  "scenarios": [
+    {
+      "id": "ticket_13_case_01",
+      "ticket_number": 13,
+      "case_number": 1,
+      "difficulty": "novice",
+      "situation": "Горят деревья в парке, площадь возгорания 10х10 метров, пострадавших нет",
+      "address": "Москва, Кусковский лесопарк",
+      "address_details": "Рядом со стадионом «Фрезер», вход со стороны аллеи Первой Маёвки",
+      "caller": {
+        "fio": "Сидорова Ольга Викторовна",
+        "phone": "916-123-98-78",
+        "role": "очевидец",
+        "opening_line": "Алло! В парке деревья горят! Площадь метров десять на десять!",
+        "initial_panic": 55,
+        "initial_trust": 50,
+        "initial_cooperation": 55,
+        "hidden_facts": {
+          "address": "Москва, Кусковский лесопарк",
+          "address_details": "Рядом со стадионом Фрезер, вход со стороны аллеи Первой Маёвки",
+          "what_happened": "Горят деревья в парке, площадь ~10x10 метров",
+          "victims": "Пострадавших нет",
+          "victims_present": false,
+          "threat_to_life": false,
+          "area": "10x10 метров"
+        }
+      },
+      "expected": {
+        "classification_id": "1.1.4.1",
+        "classification_name": "пожар: парк",
+        "signs": {
+          "sign_l1": "на улице",
+          "sign_l2": "Парк",
+          "sign_l3": "открытое пламя"
+        },
+        "services": ["fire"],
+        "services_ekp": ["fire"],
+        "victims_present": false,
+        "threat_to_life": false,
+        "additional_fields": {
+          "what_happened": "Возгорание деревьев в парке"
+        }
+      },
+      "hints": [
+        "Уточните ориентир: Кусковский лесопарк, стадион Фрезер, аллея Первой Маёвки",
+        "Уточните площадь возгорания",
+        "Уточните, есть ли рядом люди или постройки",
+        "Оповестить МЧС"
+      ]
+    },
+    {
+      "id": "ticket_13_case_02",
+      "ticket_number": 13,
+      "case_number": 2,
+      "difficulty": "normal",
+      "situation": "Рожает жена, 40 недель, кровотечения нет, воды отошли 2 минуты назад, в автомобиле",
+      "address": "Рублёвка от Кутузовского проспекта в сторону п. Жуковка",
+      "address_details": "Проехали реку Чеченка, перед автобусной остановкой",
+      "caller": {
+        "fio": "Соколов (муж)",
+        "phone": "916-897-56-23",
+        "role": "родственник",
+        "opening_line": "Алло! Жена рожает в машине! 40 недель! Воды отошли! Мы на Рублёвке!",
+        "initial_panic": 90,
+        "initial_trust": 55,
+        "initial_cooperation": 60,
+        "hidden_facts": {
+          "address": "Рублёвка от Кутузовского проспекта в сторону п. Жуковка",
+          "address_details": "Проехали реку Чеченка, перед автобусной остановкой, название не знаю",
+          "what_happened": "Роды начались, воды отошли 2 минуты назад",
+          "victims": "Роженица Соколова Ирина Ивановна, д/р 20.05.1979",
+          "victims_present": true,
+          "victims_count": 1,
+          "threat_to_life": true,
+          "week": 40,
+          "bleeding": "кровотечения нет",
+          "car": "фольксваген синий О345ВН 177"
+        }
+      },
+      "expected": {
+        "classification_id": "22.46.0.0",
+        "classification_name": "Роды",
+        "signs": {
+          "sign_l1": "Роды",
+          "sign_l2": null,
+          "sign_l3": null
+        },
+        "services": ["ambulance"],
+        "services_ekp": ["ambulance"],
+        "victims_present": true,
+        "threat_to_life": true,
+        "additional_fields": {
+          "what_happened": "Роды в автомобиле",
+          "victims_count": 1
+        }
+      },
+      "hints": [
+        "Уточните адрес и ориентир — река Чеченка, автобусная остановка",
+        "Уточните ФИО и возраст роженицы, срок беременности",
+        "Уточните, есть ли кровотечение",
+        "Уточните марку и цвет машины",
+        "Оповестить скорую"
+      ]
+    },
+    {
+      "id": "ticket_13_case_03",
+      "ticket_number": 13,
+      "case_number": 3,
+      "difficulty": "normal",
+      "situation": "На обочине лежит мужчина в крови, на вид 40 лет",
+      "address": "МКАД внутренний, 103 км",
+      "address_details": "Поворот на Гольяново",
+      "caller": {
+        "fio": "Иванова Елена Сергеевна",
+        "phone": "916-896-32-54",
+        "role": "очевидец",
+        "opening_line": "Алло! На обочине мужчина в крови лежит! На вид лет сорок!",
+        "initial_panic": 70,
+        "initial_trust": 45,
+        "initial_cooperation": 50,
+        "hidden_facts": {
+          "address": "МКАД внутренний, 103 км",
+          "address_details": "Поворот на Гольяново",
+          "what_happened": "Мужчина лежит в крови на обочине",
+          "victims": "Один пострадавший, мужчина около 40 лет",
+          "victims_present": true,
+          "victims_count": 1,
+          "threat_to_life": true
+        }
+      },
+      "expected": {
+        "classification_id": "17.1.2.0",
+        "classification_name": "Человек в крови",
+        "signs": {
+          "sign_l1": "Человек в опасности",
+          "sign_l2": "Человек в крови",
+          "sign_l3": null
+        },
+        "services": ["ambulance", "police"],
+        "services_ekp": ["ambulance"],
+        "victims_present": true,
+        "threat_to_life": true,
+        "additional_fields": {
+          "what_happened": "Человек в крови на обочине",
+          "victims_count": 1
+        }
+      },
+      "hints": [
+        "Уточните точное место — МКАД внутренний, 103 км, поворот на Гольяново",
+        "Уточните, в сознании ли пострадавший",
+        "По ЕКП автоматически оповещается скорая, при наличии криминальной составляющей добавьте полицию"
+      ]
+    }
+  ]
+}

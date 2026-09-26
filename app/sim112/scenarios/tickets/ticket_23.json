@@ -1,0 +1,173 @@
+{
+  "ticket_number": 23,
+  "source": "Билеты-задачи по C 112 . АГС_ГСИ.pdf",
+  "scenarios": [
+    {
+      "id": "ticket_23_case_01",
+      "ticket_number": 23,
+      "case_number": 1,
+      "difficulty": "normal",
+      "situation": "Скандал с пьяным мужем, требуется скорая для женщины 28 лет, травма головы, кровотечение",
+      "address": "Москва, ул. Тихомирова, дом 15 корп. 1, кв. 79",
+      "address_details": "Подъезд 2, этаж 4, код 80В",
+      "caller": {
+        "fio": "Соколов Иван Петрович",
+        "phone": "916-896-32-54",
+        "role": "сосед",
+        "opening_line": "Алло! Тут у соседей скандал, пьяный муж буянит! Женщине голову разбили!",
+        "initial_panic": 75,
+        "initial_trust": 45,
+        "initial_cooperation": 55,
+        "hidden_facts": {
+          "address": "Москва, ул. Тихомирова, дом 15 корп. 1, кв. 79",
+          "address_details": "Подъезд 2, этаж 4, код 80В",
+          "what_happened": "Скандал с пьяным мужем, женщине разбили голову",
+          "victims": "Одна пострадавшая, женщина Петрова Елена Михайловна, 28 лет",
+          "victims_present": true,
+          "victims_count": 1,
+          "threat_to_life": true,
+          "age": 28,
+          "injuries": "Травма головы, кровотечение"
+        }
+      },
+      "expected": {
+        "classification_id": "15.19.0.0",
+        "classification_name": "Скандал",
+        "signs": {
+          "sign_l1": "Скандал",
+          "sign_l2": null,
+          "sign_l3": null
+        },
+        "services": [
+          "police",
+          "ambulance"
+        ],
+        "services_ekp": [
+          "police"
+        ],
+        "victims_present": true,
+        "threat_to_life": true,
+        "additional_fields": {
+          "what_happened": "Скандал, травма головы у женщины",
+          "victims_count": 1
+        }
+      },
+      "hints": [
+        "Уточните код подъезда, этаж, квартиру",
+        "Уточните ФИО и возраст пострадавшей",
+        "По ЕКП автоматически оповещается полиция, добавьте скорую из-за травмы головы"
+      ]
+    },
+    {
+      "id": "ticket_23_case_02",
+      "ticket_number": 23,
+      "case_number": 2,
+      "difficulty": "novice",
+      "situation": "Липатина Ольга Сергеевна, 10.03.1977, чистила ухо, повредила барабанную перепонку, кровотечение",
+      "address": "Москва, ул. Лесная, дом 5",
+      "address_details": "При уточнении — г. Зеленоград, пос. Малино, ул. Лесная, дом 5",
+      "caller": {
+        "fio": "Липатина Ольга Сергеевна",
+        "phone": "916-896-32-54",
+        "role": "пострадавший",
+        "opening_line": "Алло! Я ухо почистила и повредила перепонку, кровь идёт!",
+        "initial_panic": 55,
+        "initial_trust": 55,
+        "initial_cooperation": 65,
+        "hidden_facts": {
+          "address": "г. Зеленоград, пос. Малино, ул. Лесная, дом 5",
+          "address_details": "Уточнение: не Москва, а Зеленоград",
+          "what_happened": "Повреждение барабанной перепонки при чистке уха",
+          "victims": "Одна пострадавшая — сама заявительница",
+          "victims_present": true,
+          "victims_count": 1,
+          "threat_to_life": false,
+          "age": 48,
+          "birthdate": "10.03.1977"
+        }
+      },
+      "expected": {
+        "classification_id": "22.23.0.0",
+        "classification_name": "Кровотечение",
+        "signs": {
+          "sign_l1": "Травма",
+          "sign_l2": null,
+          "sign_l3": null
+        },
+        "services": [
+          "ambulance"
+        ],
+        "services_ekp": [
+          "ambulance"
+        ],
+        "victims_present": true,
+        "threat_to_life": false,
+        "additional_fields": {
+          "what_happened": "Травма уха, повреждение барабанной перепонки",
+          "victims_count": 1
+        }
+      },
+      "hints": [
+        "Уточните адрес — заявитель может указать Москву, а фактически это Зеленоград",
+        "Уточните ФИО, возраст, что именно случилось",
+        "Оповестить скорую"
+      ]
+    },
+    {
+      "id": "ticket_23_case_03",
+      "ticket_number": 23,
+      "case_number": 3,
+      "difficulty": "normal",
+      "situation": "Потерялся ребенок 30 минут назад — 5 лет, Степанов Гриша, гулял с бабушкой во дворе",
+      "address": "Москва, ул. Домодедовская, дом 34 корп. 1",
+      "address_details": "Двор у 3 подъезда",
+      "caller": {
+        "fio": "Степанова Антонина Марковна (бабушка)",
+        "phone": "916-896-32-54",
+        "role": "родственник",
+        "opening_line": "Алло! Внук потерялся! Пять лет, гулял во дворе и пропал! Полчаса уже!",
+        "initial_panic": 90,
+        "initial_trust": 45,
+        "initial_cooperation": 60,
+        "hidden_facts": {
+          "address": "Москва, ул. Домодедовская, дом 34 корп. 1",
+          "address_details": "Двор у 3 подъезда",
+          "what_happened": "Потерялся ребёнок 5 лет 30 минут назад",
+          "victims": "Один пропавший ребёнок, Степанов Гриша, 5 лет",
+          "victims_present": true,
+          "victims_count": 1,
+          "threat_to_life": true,
+          "child_age": 5,
+          "child_clothes": "Синяя куртка, жёлтая шапка, жёлтый шарф и варежки, синие брюки, чёрные ботинки"
+        }
+      },
+      "expected": {
+        "classification_id": "18.7.0.0",
+        "classification_name": "Ребенок потерялся",
+        "signs": {
+          "sign_l1": "Потерялся (пропал): В городской среде",
+          "sign_l2": null,
+          "sign_l3": null
+        },
+        "services": [
+          "police"
+        ],
+        "services_ekp": [
+          "police"
+        ],
+        "victims_present": true,
+        "threat_to_life": true,
+        "additional_fields": {
+          "what_happened": "Потерялся ребёнок 5 лет во дворе",
+          "victims_count": 1
+        }
+      },
+      "hints": [
+        "Уточните адрес и место, где потерялся ребёнок",
+        "Уточните ФИО, возраст, во что одет ребёнок",
+        "Уточните, когда именно пропал",
+        "Оповестить полицию"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+# Web / API
+fastapi==0.141.1
+uvicorn[standard]==0.53.0
+python-multipart==0.0.12
+websockets==13.1
+
+# Валидация
+pydantic==2.13.5
+pydantic-settings==2.15.0
+email-validator==2.2.0
+
+# БД
+sqlalchemy==2.0.54
+aiosqlite==0.22.1
+alembic==1.14.0
+
+# Утилиты
+python-dotenv==1.0.1
+httpx==0.28.1
+
+# Парсинг ЕКП
+pandas>=2.2.0
+openpyxl>=3.1.0
+
+# Голос
+faster-whisper==1.2.1
+pyttsx3==2.99
+vosk==0.3.45
+
+# Отчёты
+reportlab==5.0.1

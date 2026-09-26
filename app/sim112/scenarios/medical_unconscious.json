@@ -1,0 +1,24 @@
+{
+  "id": "medical_unconscious",
+  "title": "Человек без сознания",
+  "description": "Родственник без сознания, не дышит. Заявитель в отчаянии, требует скорую немедленно. Требует инструкций по СЛР.",
+  "difficulty": "normal",
+  "initial_prompt": "ignored",
+  "opening_line": "Алло! Он не дышит! Скорее, помогите!",
+  "airtime_target": [45, 60],
+  "required_fields": ["address", "what_happened", "victims_present", "threat_to_life", "victims_count"],
+  "critical_fields": ["address", "threat_to_life"],
+  "initial_caller_state": {
+    "panic": 90,
+    "trust": 40,
+    "compliance": 60,
+    "cooperation": 25,
+    "phase": "shock",
+    "call_duration_sec": 0
+  },
+  "hidden_facts_template": {
+    "address": "ул. Гагарина 8, кв 17",
+    "victims": "мужчина, 55 лет",
+    "what_happened": "Потерял сознание час назад, дышит очень слабо"
+  }
+}

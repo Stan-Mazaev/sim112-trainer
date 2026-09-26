@@ -1,0 +1,13 @@
+# ML / LLM — опционально, на этапе подключения локальной LLM к CallerEngine.
+# По умолчанию НЕ ставится: тренажёр работает в режиме FallbackCallerGenerator.
+
+torch>=2.9.0
+transformers>=4.50.0
+accelerate>=1.0.1
+tokenizers>=0.21.0
+
+# bitsandbytes — может не иметь колёс под Python 3.14
+# sentencepiece — нужен для Gemma, собирается из исходников
+
+# --- Голос (альтернативы) ---
+# silero — VAD для STT (сейчас используется встроенный VAD в faster-whisper)
