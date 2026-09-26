@@ -42,3 +42,7 @@ Thumbs.db
 # Данные whisper (кэш моделей в проекте, если появится)
 models/
 *.bin
+# ������-����
+data/audio_cache/
+data/vosk/
+*.wav
