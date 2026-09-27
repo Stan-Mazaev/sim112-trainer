@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Панель инструктора — 112</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="instr-topbar">
+  <div class="instr-logo">112 · Панель инструктора</div>
+  <div class="instr-status" id="connection-status">Отключено</div>
+</header>
+
+<main class="instr-workspace">
+
+  <!-- Селектор сессии -->
+  <section class="instr-panel instr-sessions">
+    <button id="btn-refresh" class="btn btn-secondary">Обновить список</button>
+
+    <div class="instr-panel-header">Активные</div>
+    <div class="sessions-list" id="sessions-active">
+      <div class="empty">Нет активных звонков</div>
+    </div>
+
+    <div class="instr-panel-header">Завершённые</div>
+    <div class="sessions-list" id="sessions-completed">
+      <div class="empty">Пока ничего не завершено</div>
+    </div>
+  </section>
+
+  <!-- Поток событий -->
+  <section class="instr-panel instr-events">
+    <div class="events-toolbar">
+      <span id="current-session-label">Сессия не выбрана</span>
+      <button id="btn-download-pdf" class="btn btn-secondary" disabled>Скачать PDF</button>
+      <button id="btn-close-review" class="btn btn-danger" disabled>Закрыть разбор</button>
+    </div>
+    <div class="instr-panel-header">
+      Поток событий <span id="call-id-label"></span>
+    </div>
+    <div class="events-log" id="events-log">
+      <div class="empty">Подключитесь к сессии, чтобы видеть события</div>
+    </div>
+  </section>
+
+  <!-- Сводка -->
+  <section class="instr-panel instr-summary">
+    <div class="instr-panel-header">Сводка</div>
+
+    <div class="summary-block">
+      <div class="summary-label">Курсант</div>
+      <div class="summary-value" id="s-cadet">—</div>
+    </div>
+    <div class="summary-block">
+      <div class="summary-label">Сценарий</div>
+      <div class="summary-value" id="s-scenario">—</div>
+    </div>
+    <div class="summary-block">
+      <div class="summary-label">Длительность</div>
+      <div class="summary-value" id="s-duration">00:00</div>
+    </div>
+
+    <div class="instr-panel-header">Действия курсанта</div>
+    <div class="actions-list" id="actions-list">
+      <div class="empty">—</div>
+    </div>
+
+    <div class="instr-panel-header">Нарушения</div>
+    <div class="violations-list" id="violations-list">
+      <div class="empty">Нарушений нет</div>
+    </div>
+  </section>
+
+</main>
+
+<script src="../mock.js"></script>
+<script src="app.js"></script>
+<script src="../patch.js"></script>
+</body>
+</html>
