@@ -410,7 +410,7 @@
 
     // GET report.pdf — отдаём статичный
     if (urlStr.includes("/report.pdf")) {
-      const r = await origFetch("../report_example.pdf");
+      const r = await origFetch("../sample_report.pdf");
       if (!r.ok) {
         return new Response("PDF-пример не найден", { status: 404 });
       }
